@@ -91,26 +91,30 @@
       </div>
 
       {#each store.invoice.items as item, i}
-        <div class="item-row">
-          <span class="col-code item-code">{i + 1}</span>
-          <input class="col-name" type="text" placeholder="Naziv" bind:value={item.name} />
-          <input class="col-unit" type="text" bind:value={item.unit} />
-          <input
-            class="col-qty"
-            type="number"
-            min="0"
-            step="0.001"
-            bind:value={item.quantity}
-          />
-          <input
-            class="col-price"
-            type="number"
-            min="0"
-            step="0.01"
-            bind:value={item.price}
-          />
-          <span class="col-total item-total">{itemTotal(item)}</span>
-          <button class="btn btn-danger col-del" onclick={() => removeItem(i)}>×</button>
+        <div class="item-card">
+          <div class="item-card-header">
+            <span class="item-code">#{i + 1}</span>
+            <input class="input-name" type="text" placeholder="Naziv stavke" bind:value={item.name} />
+            <button class="btn btn-danger btn-del" onclick={() => removeItem(i)}>×</button>
+          </div>
+          <div class="item-card-body">
+            <div class="item-field">
+              <label>J.mj.</label>
+              <input type="text" bind:value={item.unit} />
+            </div>
+            <div class="item-field">
+              <label>Količina</label>
+              <input type="number" min="0" step="0.001" bind:value={item.quantity} />
+            </div>
+            <div class="item-field">
+              <label>Cijena</label>
+              <input type="number" min="0" step="0.01" bind:value={item.price} />
+            </div>
+            <div class="item-field item-field-total">
+              <label>Iznos</label>
+              <span class="item-total">{itemTotal(item)}</span>
+            </div>
+          </div>
         </div>
       {/each}
     {:else}
@@ -126,29 +130,35 @@
     justify-content: space-between;
   }
 
-  .items-header {
+  .item-card {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 8px;
+    background: white;
+  }
+
+  .item-card-header {
     display: flex;
-    gap: 6px;
     align-items: center;
-    padding: 0 0 4px 0;
+    gap: 8px;
+    padding: 8px 10px;
+    background: #f7f7f7;
     border-bottom: 1px solid #e0e0e0;
-    font-size: 10px;
+  }
+
+  .item-code {
+    font-size: 11px;
     font-weight: 600;
-    color: #888;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
+    color: #aaa;
+    flex-shrink: 0;
   }
 
-  .item-row {
-    display: flex;
-    gap: 6px;
-    align-items: center;
-  }
-
-  .item-row input {
+  .input-name {
+    flex: 1;
     border: 1px solid #d0d0d0;
     border-radius: 4px;
-    padding: 6px 8px;
+    padding: 5px 8px;
     font-size: 13px;
     font-family: inherit;
     background: white;
@@ -158,61 +168,67 @@
     min-width: 0;
   }
 
-  .item-row input:focus {
+  .input-name:focus {
     border-color: #1a1a1a;
   }
 
-  .col-code {
-    width: 22px;
+  .btn-del {
+    padding: 4px 8px;
+    font-size: 14px;
+    line-height: 1;
     flex-shrink: 0;
-    text-align: center;
   }
 
-  .col-name {
+  .item-card-body {
+    display: flex;
+    gap: 0;
+    padding: 10px;
+    gap: 10px;
+  }
+
+  .item-field {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
     flex: 1;
   }
 
-  .col-unit {
-    width: 52px;
-    flex-shrink: 0;
+  .item-field label {
+    font-size: 10px;
+    font-weight: 600;
+    color: #aaa;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
   }
 
-  .col-qty {
-    width: 70px;
-    flex-shrink: 0;
+  .item-field input {
+    border: 1px solid #d0d0d0;
+    border-radius: 4px;
+    padding: 5px 8px;
+    font-size: 13px;
+    font-family: inherit;
+    background: white;
+    color: #1a1a1a;
+    outline: none;
+    transition: border-color 0.15s;
+    min-width: 0;
+    width: 100%;
+    box-sizing: border-box;
   }
 
-  .col-price {
-    width: 76px;
-    flex-shrink: 0;
+  .item-field input:focus {
+    border-color: #1a1a1a;
   }
 
-  .col-total {
-    width: 70px;
-    flex-shrink: 0;
-    text-align: right;
-  }
-
-  .col-del {
-    width: 28px;
-    flex-shrink: 0;
-  }
-
-  .item-code {
-    font-size: 12px;
-    color: #999;
+  .item-field-total {
+    align-items: flex-end;
   }
 
   .item-total {
-    font-size: 12px;
-    font-weight: 500;
-    color: #333;
-  }
-
-  .btn.col-del {
-    padding: 6px 8px;
     font-size: 14px;
-    line-height: 1;
+    font-weight: 600;
+    color: #1a1a1a;
+    padding: 5px 0;
   }
 
   .empty-note {
