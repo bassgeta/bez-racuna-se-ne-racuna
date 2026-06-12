@@ -33,7 +33,7 @@
       store.company.name,
       store.company.address,
       store.company.oib ? `oib ${store.company.oib}` : '',
-      store.company.startingCapital ? `tem.kapital ${store.company.startingCapital}€` : '',
+      store.company.startingCapital ? `tem.kapital ${store.company.startingCapital}` : '',
     ].filter(Boolean)
   );
 </script>

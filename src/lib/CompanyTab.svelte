@@ -48,7 +48,7 @@
     <p class="form-section-title">Ostalo</p>
 
     <div class="field">
-      <label for="c-capital">Temeljni kapital (€)</label>
+      <label for="c-capital">Temeljni kapital</label>
       <input id="c-capital" type="text" bind:value={store.company.startingCapital} />
     </div>
 
